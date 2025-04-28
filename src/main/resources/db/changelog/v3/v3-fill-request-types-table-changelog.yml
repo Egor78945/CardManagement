@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: v3-2
+      author: test
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: "0"
+            sql: "SELECT COUNT(*) FROM request_types"
+      changes:
+        - insert:
+            tableName: ${TABLE_REQUEST_TYPES}
+            columns:
+              - column:
+                  name: type
+                  value: TYPE_DEBIT

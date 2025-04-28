@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: ${POSTGRES_HOST}
+    image: postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DATABASE_NAME}
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: on-failure
+    env_file:
+      - .env
+      - ./env/postgres.env
+    ports:
+      - ${POSTGRES_PORT_OUTER}:${POSTGRES_PORT_INNER}
+
+  management-service:
+    container_name: ${MANAGEMENT_SERVICE_HOST}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAVA_VERSION: ${JAVA_VERSION}
+        MANAGEMENT_SERVICE_PORT: ${MANAGEMENT_SERVICE_PORT}
+    restart: on-failure
+    env_file:
+      - .env
+      - ./env/postgres.env
+    depends_on:
+      - postgres
+    ports:
+      - ${MANAGEMENT_SERVICE_PORT_OUTER}:${MANAGEMENT_SERVICE_PORT_INNER}

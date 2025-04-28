@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: ./v2-create-card-status-table-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: ./v2-fill-card-status-table-changelog.yml
+      relativeToChangelogFile: true

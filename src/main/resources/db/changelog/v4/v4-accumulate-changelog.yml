@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: ./v4-create-user-credentials-changelog.yml
+      relativeToChangelogFile: true

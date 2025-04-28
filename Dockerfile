@@ -1,0 +1,10 @@
+ARG JAVA_VERSION
+ARG MANAGEMENT_SERVICE_PORT
+
+FROM openjdk:${JAVA_VERSION}
+
+COPY build/libs/CardManagement-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE ${MANAGEMENT_SERVICE_PORT}
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

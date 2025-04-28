@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: v5-1
+      author: test
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: ${TABLE_USER_CARDS_NAME}
+      changes:
+        - createTable:
+            tableName: ${TABLE_USER_CARDS_NAME}
+            columns:
+              - column:
+                  name: owner_email
+                  type: varchar(100)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+                    foreignKeyName: card_credential_fk
+                    referencedTableName: ${TABLE_USER_CREDENTIALS_NAME}
+                    referencedColumnNames: email
+              - column:
+                  name: number
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expiredAt
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: card_status_fk
+                    referencedTableName: ${TABLE_CARD_STATUS_NAME}
+                    referencedColumnNames: id
+              - column:
+                  name: balance
+                  type: int
+                  constraints:
+                    nullable: false

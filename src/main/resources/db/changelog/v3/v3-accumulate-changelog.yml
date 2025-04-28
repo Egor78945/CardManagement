@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: ./v3-create-request-types-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: ./v3-fill-request-types-table-changelog.yml
+      relativeToChangelogFile: true

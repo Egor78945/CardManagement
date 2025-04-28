@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: ./v6-create-user-requests-table-changelog.yml
+      relativeToChangelogFile: true
