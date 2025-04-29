@@ -6,10 +6,10 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - not:
             tableExists:
-              tableName: ${TABLE_USER_CARDS_NAME}
+              tableName: ${TABLE_USER_CARD_NAME}
       changes:
         - createTable:
-            tableName: ${TABLE_USER_CARDS_NAME}
+            tableName: ${TABLE_USER_CARD_NAME}
             columns:
               - column:
                   name: owner_email
@@ -19,7 +19,7 @@ databaseChangeLog:
                     nullable: false
                     unique: true
                     foreignKeyName: card_credential_fk
-                    referencedTableName: ${TABLE_USER_CREDENTIALS_NAME}
+                    referencedTableName: ${TABLE_USER_CREDENTIAL_NAME}
                     referencedColumnNames: email
               - column:
                   name: number

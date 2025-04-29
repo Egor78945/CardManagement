@@ -27,6 +27,7 @@ services:
     env_file:
       - .env
       - ./env/postgres.env
+      - ./env/jwt.env
     depends_on:
       - postgres
     ports:

@@ -6,10 +6,10 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: "0"
-            sql: "SELECT COUNT(*) FROM request_types"
+            sql: "SELECT COUNT(*) FROM request_type"
       changes:
         - insert:
-            tableName: ${TABLE_REQUEST_TYPES}
+            tableName: ${TABLE_REQUEST_TYPE}
             columns:
               - column:
                   name: type

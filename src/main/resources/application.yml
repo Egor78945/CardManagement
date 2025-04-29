@@ -12,5 +12,9 @@ spring:
     change-log: db/changelog/main/main-changelog.yml
     enabled: true
 
+security:
+  jwt:
+    lifetime: ${JWT_LIFETIME}
+
 server:
   port: ${MANAGEMENT_SERVICE_PORT_INNER}

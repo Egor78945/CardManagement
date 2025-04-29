@@ -1,33 +1,37 @@
 databaseChangeLog:
   - changeSet:
-      id: v4-1
+      id: v7-1
       author: test
       preConditions:
         - onFail: MARK_RAN
         - not:
             tableExists:
-              tableName: ${TABLE_USER_CREDENTIALS_NAME}
+              tableName: ${TABLE_USER_ROLE_NAME}
       changes:
         - createTable:
-            tableName: ${TABLE_USER_CREDENTIALS_NAME}
+            tableName: ${TABLE_USER_ROLE_NAME}
             columns:
               - column:
-                  name: email
-                  type: varchar(100)
+                  name: id
+                  type: bigint
                   constraints:
                     primaryKey: true
                     nullable: false
                     unique: true
+                  autoIncrement: true
               - column:
-                  name: password
-                  type: varchar(300)
+                  name: user_email
+                  type: varchar(100)
                   constraints:
                     nullable: false
+                    foreignKeyName: role_credential_fk
+                    referencedTableName: ${TABLE_USER_CREDENTIAL_NAME}
+                    referencedColumnNames: email
               - column:
                   name: role_id
                   type: bigint
                   constraints:
                     nullable: false
                     foreignKeyName: credential_role_fk
-                    referencedTableName: ${TABLE_ROLE_TYPES_NAME}
+                    referencedTableName: ${TABLE_ROLE_TYPE_NAME}
                     referencedColumnNames: id

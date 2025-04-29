@@ -6,16 +6,16 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: "0"
-            sql: "SELECT COUNT(*) FROM role_types"
+            sql: "SELECT COUNT(*) FROM role_type"
       changes:
         - insert:
-            tableName: ${TABLE_ROLE_TYPES_NAME}
+            tableName: ${TABLE_ROLE_TYPE_NAME}
             columns:
               - column:
                   name: role
                   value: ROLE_USER
         - insert:
-            tableName: ${TABLE_ROLE_TYPES_NAME}
+            tableName: ${TABLE_ROLE_TYPE_NAME}
             columns:
               - column:
                   name: role

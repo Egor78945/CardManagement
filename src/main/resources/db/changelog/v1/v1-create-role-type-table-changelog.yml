@@ -1,15 +1,15 @@
 databaseChangeLog:
   - changeSet:
-      id: v3-1
+      id: v1-1
       author: test
       preConditions:
         - onFail: MARK_RAN
         - not:
             tableExists:
-              tableName: ${TABLE_REQUEST_TYPES}
+              tableName: ${TABLE_ROLE_TYPE_NAME}
       changes:
         - createTable:
-            tableName: ${TABLE_REQUEST_TYPES}
+            tableName: ${TABLE_ROLE_TYPE_NAME}
             columns:
               - column:
                   name: id
@@ -20,7 +20,7 @@ databaseChangeLog:
                     unique: true
                   autoIncrement: true
               - column:
-                  name: type
+                  name: role
                   type: varchar(30)
                   constraints:
                     nullable: false

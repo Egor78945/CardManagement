@@ -1,4 +1,4 @@
 databaseChangeLog:
   - include:
-      file: ./v5-create-user-cards-table-changelog.yml
+      file: v5-create-user-card-table-changelog.yml
       relativeToChangelogFile: true

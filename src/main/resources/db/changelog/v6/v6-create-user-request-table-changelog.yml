@@ -6,10 +6,10 @@ databaseChangeLog:
         - onFail: MARK_RAN
         - not:
             tableExists:
-              tableName: ${TABLE_USER_REQUESTS_NAME}
+              tableName: ${TABLE_USER_REQUEST_NAME}
       changes:
         - createTable:
-            tableName: ${TABLE_USER_REQUESTS_NAME}
+            tableName: ${TABLE_USER_REQUEST_NAME}
             columns:
               - column:
                   name: user_email
@@ -19,7 +19,7 @@ databaseChangeLog:
                     nullable: false
                     unique: true
                     foreignKeyName: request_credential_fk
-                    referencedTableName: ${TABLE_USER_CREDENTIALS_NAME}
+                    referencedTableName: ${TABLE_USER_CREDENTIAL_NAME}
                     referencedColumnNames: email
               - column:
                   name: request_type_id
@@ -27,7 +27,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: request_type_fk
-                    referencedTableName: ${TABLE_REQUEST_TYPES}
+                    referencedTableName: ${TABLE_REQUEST_TYPE}
                     referencedColumnNames: id
               - column:
                   name: message
