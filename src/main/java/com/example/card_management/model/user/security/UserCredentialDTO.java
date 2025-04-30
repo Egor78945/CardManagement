@@ -1,13 +1,18 @@
 package com.example.card_management.model.user.security;
 
+import com.example.card_management.service.security.validation.annotation.Password;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
-public class UserRegistrationDTO {
+public class UserCredentialDTO {
     private String email;
     private String password;
 
-    public UserRegistrationDTO(String email, String password) {
-        this.email = email;
+    public UserCredentialDTO(@NotNull(message = "email is null") @Email(message = "invalid email format") String email,
+                             @NotNull(message = "password in null") @Password String password) {
+        this.email = email.toLowerCase();
         this.password = password;
     }
 
@@ -16,7 +21,7 @@ public class UserRegistrationDTO {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getPassword() {
@@ -30,7 +35,7 @@ public class UserRegistrationDTO {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        UserRegistrationDTO that = (UserRegistrationDTO) o;
+        UserCredentialDTO that = (UserCredentialDTO) o;
         return Objects.equals(email, that.email);
     }
 
@@ -41,7 +46,7 @@ public class UserRegistrationDTO {
 
     @Override
     public String toString() {
-        return "UserRegistrationDTO{" +
+        return "UserCredentialDTO{" +
                 "email='" + email + '\'' +
                 '}';
     }
