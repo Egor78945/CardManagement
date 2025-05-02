@@ -1,6 +1,6 @@
 package com.example.card_management.service.user.card.router;
 
-import com.example.card_management.enumeration.card.UserCardType;
+import com.example.card_management.enumeration.user.card.type.UserCardTypeEnumeration;
 import com.example.card_management.exception.CardManagementException;
 import com.example.card_management.model.user.card.entity.UserCard;
 import com.example.card_management.service.user.card.MastercardCardServiceManager;
@@ -13,18 +13,18 @@ import java.util.Map;
 
 @Component
 public class UserCardServiceRouterManager implements UserCardServiceRouter<UserCard> {
-    private final Map<UserCardType, UserCardService<UserCard>> cardServiceStrategy;
+    private final Map<UserCardTypeEnumeration, UserCardService<UserCard>> cardServiceStrategy;
 
     public UserCardServiceRouterManager(VisaCardServiceManager visaCardServiceManager, MastercardCardServiceManager mastercardCardServiceManager) {
         this.cardServiceStrategy = new HashMap<>();
-        cardServiceStrategy.put(UserCardType.VISA, visaCardServiceManager);
-        cardServiceStrategy.put(UserCardType.MASTERCARD, mastercardCardServiceManager);
+        cardServiceStrategy.put(UserCardTypeEnumeration.VISA, visaCardServiceManager);
+        cardServiceStrategy.put(UserCardTypeEnumeration.MASTERCARD, mastercardCardServiceManager);
     }
 
     @Override
-    public UserCardService<UserCard> getByCardType(UserCardType userCardType) {
-        if(userCardType != null) {
-            UserCardService<UserCard> userCardService = cardServiceStrategy.get(userCardType);
+    public UserCardService<UserCard> getByCardType(UserCardTypeEnumeration userCardTypeEnumeration) {
+        if(userCardTypeEnumeration != null) {
+            UserCardService<UserCard> userCardService = cardServiceStrategy.get(userCardTypeEnumeration);
             if(userCardService != null){
                 return userCardService;
             }

@@ -1,7 +1,7 @@
 databaseChangeLog:
   - include:
-      file: v3-create-request-type-changelog.yml
+      file: v3-create-user-card-request-type-table-changelog.yml
       relativeToChangelogFile: true
   - include:
-      file: v3-fill-request-type-table-changelog.yml
+      file: v3-fill-user-card-request-type-table-changelog.yml
       relativeToChangelogFile: true

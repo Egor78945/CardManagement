@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1-2
+      author: test
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: "0"
+            sql: "SELECT COUNT(*) FROM user_role_type"
+      changes:
+        - insert:
+            tableName: ${TABLE_USER_ROLE_TYPE_NAME}
+            columns:
+              - column:
+                  name: role
+                  value: ROLE_USER
+        - insert:
+            tableName: ${TABLE_USER_ROLE_TYPE_NAME}
+            columns:
+              - column:
+                  name: role
+                  value: ROLE_ADMIN

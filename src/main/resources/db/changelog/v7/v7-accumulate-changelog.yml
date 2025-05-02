@@ -1,4 +1,4 @@
 databaseChangeLog:
   - include:
-      file: v7-create-user-request-table-changelog.yml
+      file: v7-create-user-card-request-table-changelog.yml
       relativeToChangelogFile: true

@@ -1,7 +1,8 @@
 package com.example.card_management.model.user.card.entity;
 
-import com.example.card_management.model.card.status.entity.CardStatus;
-import com.example.card_management.model.card.type.entity.CardType;
+import com.example.card_management.model.user.card.status.entity.UserCardStatus;
+import com.example.card_management.model.user.card.type.entity.UserCardType;
+import com.example.card_management.model.user.credential.entity.UserCredential;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -22,17 +23,17 @@ public class UserCard {
     private Date expiredAt;
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private CardStatus status;
+    private UserCardStatus status;
     @ManyToOne
     @JoinColumn(name = "type_id")
-    private CardType type;
+    private UserCardType type;
     @Column(name = "balance")
     private double balance;
 
     public UserCard() {
     }
 
-    public UserCard(String ownerEmail, String number, Date expiredAt, CardStatus status, CardType type, double balance) {
+    public UserCard(String ownerEmail, String number, Date expiredAt, UserCardStatus status, UserCardType type, double balance) {
         this.ownerEmail = ownerEmail;
         this.number = number;
         this.expiredAt = expiredAt;
@@ -73,19 +74,19 @@ public class UserCard {
         this.expiredAt = expiredAt;
     }
 
-    public CardStatus getStatus() {
+    public UserCardStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CardStatus status) {
+    public void setStatus(UserCardStatus status) {
         this.status = status;
     }
 
-    public CardType getType() {
+    public UserCardType getType() {
         return type;
     }
 
-    public void setType(CardType type) {
+    public void setType(UserCardType type) {
         this.type = type;
     }
 
@@ -113,7 +114,6 @@ public class UserCard {
     public String toString() {
         return "UserCard{" +
                 "id=" + id +
-                ", ownerEmail='" + ownerEmail + '\'' +
                 ", expiredAt=" + expiredAt +
                 ", status=" + (status != null ? status : null) +
                 ", type=" + (type != null ? type : null) +

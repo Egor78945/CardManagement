@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserCardRepository extends JpaRepository<UserCard, Long> {
@@ -25,6 +26,13 @@ public interface UserCardRepository extends JpaRepository<UserCard, Long> {
             "where c.ownerEmail=?1 and c.type.id=?2")
     @Transactional(isolation = Isolation.READ_COMMITTED)
     List<UserCard> findAllByOwner_EmailAndType_Id(String ownerEmail, long typeId, Pageable pageable);
+
+    @Query("from UserCard c " +
+            "left join fetch c.type t " +
+            "left join fetch c.status s " +
+            "where c.number=?1")
+    @Transactional
+    Optional<UserCard> findUserCardByNumber(String number);
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     boolean existsUserCardByNumber(String number);

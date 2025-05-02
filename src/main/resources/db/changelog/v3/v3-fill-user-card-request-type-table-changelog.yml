@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: v3-2
+      author: test
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: "0"
+            sql: "SELECT COUNT(*) FROM user_card_request_type"
+      changes:
+        - insert:
+            tableName: ${TABLE_USER_CARD_REQUEST_TYPE_NAME}
+            columns:
+              - column:
+                  name: type
+                  value: TYPE_BLOCK

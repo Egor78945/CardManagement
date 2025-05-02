@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: v7-1
+      author: test
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: ${TABLE_USER_CARD_REQUEST_NAME}
+      changes:
+        - createTable:
+            tableName: ${TABLE_USER_CARD_REQUEST_NAME}
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+                  autoIncrement: true
+              - column:
+                  name: sender_email
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: request_credential_fk
+                    referencedTableName: ${TABLE_USER_CREDENTIAL_NAME}
+                    referencedColumnNames: email
+              - column:
+                  name: request_type_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: request_type_fk
+                    referencedTableName: ${TABLE_USER_CARD_REQUEST_TYPE_NAME}
+                    referencedColumnNames: id
+              - column:
+                  name: card_number
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+                    foreignKeyName: request_card_number_fk
+                    referencedTableName: ${TABLE_USER_CARD_NAME}
+                    referencedColumnNames: number
+              - column:
+                  name: message
+                  type: varchar(300)
+                  constraints:
+                    nullable: false

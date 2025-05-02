@@ -1,13 +1,15 @@
 package com.example.card_management.service.user.card.generator;
 
 import com.example.card_management.configuration.card.environment.CardEnvironment;
-import com.example.card_management.enumeration.card.UserCardStatusType;
-import com.example.card_management.enumeration.card.UserCardType;
+import com.example.card_management.enumeration.user.card.status.UserCardStatusTypeEnumeration;
+import com.example.card_management.enumeration.user.card.type.UserCardTypeEnumeration;
 import com.example.card_management.exception.CardManagementException;
-import com.example.card_management.model.card.status.entity.CardStatus;
-import com.example.card_management.model.card.type.entity.CardType;
+import com.example.card_management.model.user.card.status.entity.UserCardStatus;
+import com.example.card_management.model.user.card.type.entity.UserCardType;
 import com.example.card_management.model.user.card.entity.UserCard;
+import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.service.user.card.router.UserCardServiceRouter;
+import com.example.card_management.service.user.credential.UserCredentialService;
 import com.example.card_management.util.encoder.Encoder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,12 +19,14 @@ import java.util.Random;
 
 @Service
 public class UserCardGeneratorManager implements UserCardGenerator<UserCard> {
+    private final UserCredentialService<UserCredential> userCredentialService;
     private final UserCardServiceRouter<UserCard> userCardUserCardServiceRouter;
     private final CardEnvironment cardEnvironment;
     private final Encoder<String> encoder;
     private final Random random;
 
-    public UserCardGeneratorManager(@Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardUserCardServiceRouter, @Qualifier("stringEncoder") Encoder<String> encoder, CardEnvironment cardEnvironment) {
+    public UserCardGeneratorManager(@Qualifier("userCredentialServiceManager") UserCredentialService<UserCredential> userCredentialService, @Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardUserCardServiceRouter, @Qualifier("stringEncoder") Encoder<String> encoder, CardEnvironment cardEnvironment) {
+        this.userCredentialService = userCredentialService;
         this.random = new Random();
         this.userCardUserCardServiceRouter = userCardUserCardServiceRouter;
         this.cardEnvironment = cardEnvironment;
@@ -30,17 +34,17 @@ public class UserCardGeneratorManager implements UserCardGenerator<UserCard> {
     }
 
     @Override
-    public UserCard buildFrom(String userEmail, UserCardType userCardType) {
-        String cardNumber = generateCardNumber(userCardType.getPrefix());
+    public UserCard buildFrom(String userEmail, UserCardTypeEnumeration userCardTypeEnumeration) {
+        String cardNumber = generateCardNumber(userCardTypeEnumeration.getPrefix());
         int limit = 0;
-        while (userCardUserCardServiceRouter.getByCardType(userCardType).existsByCardNumber(cardNumber) && limit < 10){
-            cardNumber = generateCardNumber(userCardType.getPrefix());
+        while (userCardUserCardServiceRouter.getByCardType(userCardTypeEnumeration).existsByCardNumber(cardNumber) && limit < 10) {
+            cardNumber = generateCardNumber(userCardTypeEnumeration.getPrefix());
             limit++;
         }
-        if(limit >= 10){
+        if (limit >= 10) {
             throw new CardManagementException("card number has not been generated");
         }
-        return new UserCard(userEmail, encoder.encode(cardNumber), new Date(new Date().getTime() + cardEnvironment.getCARD_LIFETIME()), new CardStatus(UserCardStatusType.STATUS_ACTIVE.getId(), UserCardStatusType.STATUS_ACTIVE.name()), new CardType(userCardType.getId(), userCardType.name()), 0.0);
+        return new UserCard(userEmail, encoder.encode(cardNumber), new Date(new Date().getTime() + cardEnvironment.getCARD_LIFETIME()), new UserCardStatus(UserCardStatusTypeEnumeration.STATUS_ACTIVE.getId(), UserCardStatusTypeEnumeration.STATUS_ACTIVE.name()), new UserCardType(userCardTypeEnumeration.getId(), userCardTypeEnumeration.name()), 0.0);
     }
 
     private String generateCardNumber(String prefix) {

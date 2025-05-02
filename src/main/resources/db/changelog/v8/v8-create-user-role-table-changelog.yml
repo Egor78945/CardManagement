@@ -33,5 +33,5 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: credential_role_fk
-                    referencedTableName: ${TABLE_ROLE_TYPE_NAME}
+                    referencedTableName: ${TABLE_USER_ROLE_TYPE_NAME}
                     referencedColumnNames: id

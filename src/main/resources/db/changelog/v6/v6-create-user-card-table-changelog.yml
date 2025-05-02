@@ -31,6 +31,7 @@ databaseChangeLog:
                   name: number
                   type: varchar(100)
                   constraints:
+                    unique: true
                     nullable: false
               - column:
                   name: expired_at
@@ -43,7 +44,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: card_status_fk
-                    referencedTableName: ${TABLE_CARD_STATUS_NAME}
+                    referencedTableName: ${TABLE_USER_CARD_STATUS_NAME}
                     referencedColumnNames: id
               - column:
                   name: type_id
@@ -51,7 +52,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: card_type_fk
-                    referencedTableName: ${TABLE_CARD_TYPE_NAME}
+                    referencedTableName: ${TABLE_USER_CARD_TYPE_NAME}
                     referencedColumnNames: id
               - column:
                   name: balance

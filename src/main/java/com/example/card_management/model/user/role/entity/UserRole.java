@@ -1,6 +1,5 @@
 package com.example.card_management.model.user.role.entity;
 
-import com.example.card_management.model.role.entity.Role;
 import com.example.card_management.model.user.credential.entity.UserCredential;
 import jakarta.persistence.*;
 
@@ -13,16 +12,16 @@ public class UserRole {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_email")
     private UserCredential user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
-    private Role role;
+    private UserRoleType userRoleType;
 
-    public UserRole(UserCredential user, Role role) {
+    public UserRole(UserCredential user, UserRoleType userRoleType) {
         this.user = user;
-        this.role = role;
+        this.userRoleType = userRoleType;
     }
 
     public UserRole() {
@@ -44,12 +43,12 @@ public class UserRole {
         this.user = user;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRoleType getRole() {
+        return userRoleType;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(UserRoleType userRoleType) {
+        this.userRoleType = userRoleType;
     }
 
     @Override
@@ -69,7 +68,7 @@ public class UserRole {
         return "UserRole{" +
                 "id=" + id +
                 ", user_email=" + (user != null ? user.getEmail() : null) +
-                ", role_id=" + (role != null ? role.getId() : null) +
+                ", role_id=" + (userRoleType != null ? userRoleType.getId() : null) +
                 '}';
     }
 }

@@ -13,8 +13,9 @@ import java.util.Optional;
 @Repository
 public interface UserCredentialRepository extends JpaRepository<UserCredential, String> {
     @Query("from UserCredential u " +
-            "left join fetch u.roleList l" +
-            " left join fetch l.role where u.email=?1")
+            "left join fetch u.roleList l " +
+            "left join fetch l.userRoleType " +
+            "where u.email=?1")
     @Transactional(isolation = Isolation.READ_COMMITTED)
     Optional<UserCredential> findUserCredentialByEmail(String email);
 

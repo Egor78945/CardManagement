@@ -1,7 +1,6 @@
 package com.example.card_management.configuration.security;
 
-import com.example.card_management.configuration.security.filter.JWTFilter;
-import com.example.card_management.enumeration.role.RoleType;
+import com.example.card_management.enumeration.user.role.type.UserRoleTypeEnumeration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +42,7 @@ public class WebSecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/v1/authentication/**").permitAll()
-                        .anyRequest().hasAnyAuthority(RoleType.ROLE_USER.name(), RoleType.ROLE_ADMIN.name()))
+                        .anyRequest().hasAnyAuthority(UserRoleTypeEnumeration.ROLE_USER.name(), UserRoleTypeEnumeration.ROLE_ADMIN.name()))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
