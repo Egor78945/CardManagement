@@ -9,13 +9,13 @@ import javax.crypto.SecretKey;
 
 @Component
 public class JWTEnvironment {
-    private final int JWT_LIFETIME;
+    private final long JWT_LIFETIME;
 
-    public JWTEnvironment(@Value("${security.jwt.lifetime}") int JWT_LIFETIME) {
+    public JWTEnvironment(@Value("${security.jwt.lifetime}") long JWT_LIFETIME) {
         this.JWT_LIFETIME = JWT_LIFETIME;
     }
 
-    public int getJWT_LIFETIME() {
+    public long getJWT_LIFETIME() {
         return JWT_LIFETIME;
     }
 

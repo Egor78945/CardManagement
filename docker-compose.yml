@@ -28,6 +28,8 @@ services:
       - .env
       - ./env/postgres.env
       - ./env/jwt.env
+      - ./env/card.env
+      - ./env/encoder.env
     depends_on:
       - postgres
     ports:

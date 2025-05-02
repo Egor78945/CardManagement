@@ -4,6 +4,7 @@ import com.example.card_management.exception.AuthenticationException;
 import com.example.card_management.exception.NotFoundException;
 import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.repository.user.credential.UserCredentialRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service

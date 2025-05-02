@@ -13,7 +13,7 @@ public class UserRole {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_email")
     private UserCredential user;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -56,20 +56,20 @@ public class UserRole {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserRole userRole = (UserRole) o;
-        return Objects.equals(id, userRole.id) && Objects.equals(user, userRole.user) && Objects.equals(role, userRole.role);
+        return Objects.equals(id, userRole.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, role);
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
         return "UserRole{" +
                 "id=" + id +
-                ", user_email=" + user.getEmail() +
-                ", role_id=" + role.getId() +
+                ", user_email=" + (user != null ? user.getEmail() : null) +
+                ", role_id=" + (role != null ? role.getId() : null) +
                 '}';
     }
 }

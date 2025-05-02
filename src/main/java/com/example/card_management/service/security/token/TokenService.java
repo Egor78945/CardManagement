@@ -11,7 +11,5 @@ public interface TokenService <C extends UserCredential> {
 
     List<String> extractAuthoritiesFromToken(String token);
 
-    boolean isTokenExpired(String token);
-
     boolean isTokenValid(String token);
 }

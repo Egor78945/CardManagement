@@ -7,11 +7,15 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class UserCredentialDTO {
+    @NotNull(message = "email is null")
+    @Email(message = "invalid email format")
     private String email;
+    @NotNull(message = "password in null")
+    @Password
     private String password;
 
-    public UserCredentialDTO(@NotNull(message = "email is null") @Email(message = "invalid email format") String email,
-                             @NotNull(message = "password in null") @Password String password) {
+    public UserCredentialDTO(String email,
+                             String password) {
         this.email = email.toLowerCase();
         this.password = password;
     }

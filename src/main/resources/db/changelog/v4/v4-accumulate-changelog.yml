@@ -1,4 +1,7 @@
 databaseChangeLog:
   - include:
-      file: v4-create-user-credential-table-changelog.yml
+      file: ./v4-create-card-type-table-changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: ./v4-fill-card-type-table-changelog.yml
       relativeToChangelogFile: true

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: v5-1
+      id: v6-1
       author: test
       preConditions:
         - onFail: MARK_RAN
@@ -12,12 +12,18 @@ databaseChangeLog:
             tableName: ${TABLE_USER_CARD_NAME}
             columns:
               - column:
-                  name: owner_email
-                  type: varchar(100)
+                  name: id
+                  type: bigint
                   constraints:
                     primaryKey: true
                     nullable: false
                     unique: true
+                  autoIncrement: true
+              - column:
+                  name: owner_email
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
                     foreignKeyName: card_credential_fk
                     referencedTableName: ${TABLE_USER_CREDENTIAL_NAME}
                     referencedColumnNames: email
@@ -27,7 +33,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: expiredAt
+                  name: expired_at
                   type: date
                   constraints:
                     nullable: false
@@ -40,7 +46,15 @@ databaseChangeLog:
                     referencedTableName: ${TABLE_CARD_STATUS_NAME}
                     referencedColumnNames: id
               - column:
+                  name: type_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: card_type_fk
+                    referencedTableName: ${TABLE_CARD_TYPE_NAME}
+                    referencedColumnNames: id
+              - column:
                   name: balance
-                  type: int
+                  type: double
                   constraints:
                     nullable: false

@@ -14,7 +14,7 @@ public class UserCredential {
     private String email;
     @Column(name = "password", updatable = false)
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<UserRole> roleList;
 
     public UserCredential(String email, String password) {
@@ -49,19 +49,18 @@ public class UserCredential {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserCredential that = (UserCredential) o;
-        return Objects.equals(email, that.email) && Objects.equals(roleList, that.roleList);
+        return Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, roleList);
+        return Objects.hash(email);
     }
 
     @Override
     public String toString() {
         return "UserCredential{" +
-                "roleList=" + roleList +
-                ", email='" + email + '\'' +
+                "email='" + email + '\'' +
                 '}';
     }
 }

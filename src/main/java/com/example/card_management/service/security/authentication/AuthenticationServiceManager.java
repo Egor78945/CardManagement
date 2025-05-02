@@ -1,4 +1,4 @@
-package com.example.card_management.service.security;
+package com.example.card_management.service.security.authentication;
 
 import com.example.card_management.exception.AuthenticationException;
 import com.example.card_management.model.user.credential.entity.UserCredential;
@@ -7,18 +7,19 @@ import com.example.card_management.service.security.token.TokenService;
 import com.example.card_management.service.user.credential.UserCredentialService;
 import com.example.card_management.service.user.credential.mapper.UserCredentialMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationServiceManager implements AuthenticationService<UserCredentialDTO> {
+public class AuthenticationServiceManager extends AuthenticationService<UserCredentialDTO> {
     private final UserCredentialService<UserCredential> userCredentialService;
     private final UserCredentialMapper userCredentialMapper;
-    private final TokenService<UserCredential> tokenService;
 
     public AuthenticationServiceManager(@Qualifier("userCredentialServiceManager") UserCredentialService<UserCredential> userCredentialService, @Qualifier("JWTService") TokenService<UserCredential> tokenService, UserCredentialMapper userCredentialMapper) {
+        super(tokenService);
         this.userCredentialService = userCredentialService;
-        this.tokenService = tokenService;
         this.userCredentialMapper = userCredentialMapper;
     }
 
@@ -29,10 +30,19 @@ public class AuthenticationServiceManager implements AuthenticationService<UserC
 
     @Override
     public String authenticate(UserCredentialDTO userCredentialDTO) {
-        if (BCrypt.checkpw(userCredentialDTO.getPassword(), userCredentialService.getPasswordByEmail(userCredentialDTO.getEmail()))) {
+        if (userCredentialService.existsByEmail(userCredentialDTO.getEmail()) && BCrypt.checkpw(userCredentialDTO.getPassword(), userCredentialService.getPasswordByEmail(userCredentialDTO.getEmail()))) {
             return tokenService.generateToken(userCredentialService.getByEmail(userCredentialDTO.getEmail()));
         } else {
-            throw new AuthenticationException("wrong password");
+            throw new AuthenticationException("wrong password or email");
         }
+    }
+
+    @Override
+    public String getCurrentUserEmail() {
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        if(currentUser == null || currentUser.getPrincipal() == null){
+            throw new AuthenticationException("user is not authenticated");
+        }
+        return currentUser.getPrincipal().toString();
     }
 }

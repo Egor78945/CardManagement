@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: v8-create-user-role-table-changelog.yml
+      relativeToChangelogFile: true

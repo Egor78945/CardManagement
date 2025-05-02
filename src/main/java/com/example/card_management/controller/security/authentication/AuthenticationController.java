@@ -3,7 +3,7 @@ package com.example.card_management.controller.security.authentication;
 import com.example.card_management.controller.advice.handler.CommonControllerExceptionHandler;
 import com.example.card_management.controller.security.authentication.advice.handler.AuthenticationControllerExceptionHandler;
 import com.example.card_management.model.user.security.UserCredentialDTO;
-import com.example.card_management.service.security.AuthenticationService;
+import com.example.card_management.service.security.authentication.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +24,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public void registration(@Valid @RequestBody UserCredentialDTO user) {
+    public void registration(@RequestBody @Valid UserCredentialDTO user) {
         authenticationService.register(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody UserCredentialDTO user) {
+    public ResponseEntity<String> login(@RequestBody @Valid UserCredentialDTO user) {
         return ResponseEntity.ok(authenticationService.authenticate(user));
     }
 }

@@ -6,8 +6,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,7 @@ public class JWTService implements TokenService<UserCredential> {
                         .map(r -> r.getRole().getRole())
                         .toList()))
                 .subject(credential.getEmail())
-                .issuedAt(new Date(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli() + jwtEnvironment.getJWT_LIFETIME()))
+                .expiration(new Date(System.currentTimeMillis() + jwtEnvironment.getJWT_LIFETIME()))
                 .signWith(jwtEnvironment.getJWT_SECRET())
                 .compact();
     }
@@ -44,29 +42,25 @@ public class JWTService implements TokenService<UserCredential> {
     }
 
     @Override
-    public boolean isTokenExpired(String token) {
-        return extractClaimsFromToken(token).getExpiration().before(new Date());
-    }
-
-    @Override
     public boolean isTokenValid(String token) {
         try {
-            Jwts.parser()
-                    .verifyWith(jwtEnvironment.getJWT_SECRET())  // Проверка подписи
-                    .build()
-                    .parseSignedClaims(token);
+            Claims claims = extractClaimsFromToken(token);
+            return claims.get("roles", List.class) != null && claims.getSubject() != null;
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     private Claims extractClaimsFromToken(String token) {
-        return Jwts
-                .parser()
-                .verifyWith(jwtEnvironment.getJWT_SECRET())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            return Jwts
+                    .parser()
+                    .verifyWith(jwtEnvironment.getJWT_SECRET())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }
