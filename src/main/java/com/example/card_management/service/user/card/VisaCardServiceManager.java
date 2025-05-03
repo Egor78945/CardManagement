@@ -21,11 +21,12 @@ public class VisaCardServiceManager extends UserCardService<UserCard> {
     }
 
     @Override
-    public void save(UserCard userCard) {
-        if (!userCardRepository.existsUserCardByNumber(userCard.getNumber()) && userCardRepository.findCountByOwnerEmailAndTypeId(userCard.getOwnerEmail(), UserCardTypeEnumeration.VISA.getId()) < 5) {
+    public String save(UserCard userCard) {
+        if (userCardRepository.findCountByOwnerEmailAndTypeId(userCard.getOwnerEmail(), UserCardTypeEnumeration.VISA.getId()) < 5) {
             userCardRepository.save(userCard);
+            return encoder.decode(userCard.getNumber());
         } else {
-            throw new CardManagementException("card with this number is already exists or count out of limit");
+            throw new CardManagementException("card with this number is already exists or count is out of limit");
         }
     }
 
@@ -33,12 +34,11 @@ public class VisaCardServiceManager extends UserCardService<UserCard> {
     public List<UserCard> getAllByOwnerEmailAndCardType(String email, int pageNumber, int pageSize) {
         return userCardRepository.findAllByOwner_EmailAndType_Id(email, UserCardTypeEnumeration.VISA.getId(), PageRequest.of(pageNumber, pageSize))
                 .stream()
-                .map(super::maskCardNumber)
                 .toList();
     }
 
     @Override
-    public boolean existsByCardNumber(String cardNumber) {
-        return userCardRepository.existsUserCardByNumber(cardNumber);
+    public boolean existsByCardNumberAndCardType(String cardNumber) {
+        return userCardRepository.existsUserCardByNumberAndType_Id(encoder.encode(cardNumber), UserCardTypeEnumeration.VISA.getId());
     }
 }

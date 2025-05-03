@@ -34,7 +34,8 @@ public interface UserCardRepository extends JpaRepository<UserCard, Long> {
     @Transactional
     Optional<UserCard> findUserCardByNumber(String number);
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    boolean existsUserCardByNumberAndType_Id(String number, long typeId);
+
     boolean existsUserCardByNumber(String number);
 
     @Query("select count(u) from UserCard u where u.ownerEmail=?1 and u.type.id=?2")

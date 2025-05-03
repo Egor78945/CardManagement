@@ -19,14 +19,12 @@ import java.util.Random;
 
 @Service
 public class UserCardGeneratorManager implements UserCardGenerator<UserCard> {
-    private final UserCredentialService<UserCredential> userCredentialService;
     private final UserCardServiceRouter<UserCard> userCardUserCardServiceRouter;
     private final CardEnvironment cardEnvironment;
     private final Encoder<String> encoder;
     private final Random random;
 
-    public UserCardGeneratorManager(@Qualifier("userCredentialServiceManager") UserCredentialService<UserCredential> userCredentialService, @Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardUserCardServiceRouter, @Qualifier("stringEncoder") Encoder<String> encoder, CardEnvironment cardEnvironment) {
-        this.userCredentialService = userCredentialService;
+    public UserCardGeneratorManager(@Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardUserCardServiceRouter, @Qualifier("stringEncoder") Encoder<String> encoder, CardEnvironment cardEnvironment) {
         this.random = new Random();
         this.userCardUserCardServiceRouter = userCardUserCardServiceRouter;
         this.cardEnvironment = cardEnvironment;

@@ -6,4 +6,5 @@ import com.example.card_management.service.user.card.UserCardService;
 
 public interface UserCardServiceRouter <C extends UserCard> {
     UserCardService<C> getByCardType(UserCardTypeEnumeration userCardTypeEnumeration);
+    UserCardService<C> getByCardNumber(String cardNumber);
 }

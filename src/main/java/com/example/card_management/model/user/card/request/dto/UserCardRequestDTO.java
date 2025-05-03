@@ -1,12 +1,13 @@
 package com.example.card_management.model.user.card.request.dto;
 
+import com.example.card_management.model.user.card.request.entity.UserCardRequest;
 import com.example.card_management.service.validation.annotation.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
-public class UserCardRequestDTO {
+public class UserCardRequestDTO extends UserCardRequest {
     @NotNull(message = "card number is null")
     @Size(min = 16, max = 16, message = "invalid card number")
     @Digits(message = "invalid card number")
