@@ -33,18 +33,23 @@ public class JWTFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            if (tokenService.isTokenValid(token) || !userCredentialService.existsByEmail(tokenService.extractEmailFromToken(token))) {
-                String email = tokenService.extractEmailFromToken(token);
-                List<String> authorities = tokenService.extractAuthoritiesFromToken(token);
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        email, null, authorities
-                        .stream()
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList())
-                );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            } else {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "invalid token");
+            try {
+                if (tokenService.isTokenValid(token) && userCredentialService.existsByEmail(tokenService.extractEmailFromToken(token))) {
+                    String email = tokenService.extractEmailFromToken(token);
+                    List<String> authorities = tokenService.extractAuthoritiesFromToken(token);
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            email, null, authorities
+                            .stream()
+                            .map(SimpleGrantedAuthority::new)
+                            .collect(Collectors.toList())
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "invalid token");
+                    return;
+                }
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
                 return;
             }
         }

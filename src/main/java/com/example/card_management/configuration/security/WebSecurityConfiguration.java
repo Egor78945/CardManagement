@@ -41,6 +41,7 @@ public class WebSecurityConfiguration {
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers("/api/v1/admin/**").hasAuthority(UserRoleTypeEnumeration.ROLE_ADMIN.name())
                         .requestMatchers("/api/v1/authentication/**").permitAll()
                         .anyRequest().hasAnyAuthority(UserRoleTypeEnumeration.ROLE_USER.name(), UserRoleTypeEnumeration.ROLE_ADMIN.name()))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

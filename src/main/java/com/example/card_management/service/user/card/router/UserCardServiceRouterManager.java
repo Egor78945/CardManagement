@@ -9,6 +9,8 @@ import com.example.card_management.service.user.card.UserCardService;
 import com.example.card_management.service.user.card.VisaCardServiceManager;
 import com.example.card_management.util.encoder.Encoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,7 @@ public class UserCardServiceRouterManager implements UserCardServiceRouter<UserC
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public UserCardService<UserCard> getByCardNumber(String cardNumber) {
         return cardServiceStrategy
                 .get(UserCardTypeEnumeration.getById(userCardRepository.findUserCardByNumber(encoder.encode(cardNumber))

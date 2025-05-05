@@ -12,15 +12,14 @@ public class UserRole {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_email")
-    private UserCredential user;
+    @Column(name = "user_email")
+    private String user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private UserRoleType userRoleType;
 
     public UserRole(UserCredential user, UserRoleType userRoleType) {
-        this.user = user;
+        this.user = user.getEmail();
         this.userRoleType = userRoleType;
     }
 
@@ -35,11 +34,11 @@ public class UserRole {
         this.id = id;
     }
 
-    public UserCredential getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(UserCredential user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -67,7 +66,7 @@ public class UserRole {
     public String toString() {
         return "UserRole{" +
                 "id=" + id +
-                ", user_email=" + (user != null ? user.getEmail() : null) +
+                ", user_email=" + (user != null ? user : null) +
                 ", role_id=" + (userRoleType != null ? userRoleType.getId() : null) +
                 '}';
     }

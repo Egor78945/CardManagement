@@ -4,11 +4,12 @@ import com.example.card_management.exception.AuthenticationException;
 import com.example.card_management.exception.NotFoundException;
 import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.repository.user.credential.UserCredentialRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserCredentialServiceManager implements UserCredentialService<UserCredential> {
+public class UserCredentialServiceManager extends UserCredentialService<UserCredential> {
     private final UserCredentialRepository userCredentialRepository;
 
     public UserCredentialServiceManager(UserCredentialRepository userCredentialRepository) {
@@ -16,6 +17,7 @@ public class UserCredentialServiceManager implements UserCredentialService<UserC
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void save(UserCredential userCredential) {
         if (!existsByEmail(userCredential.getEmail())) {
             userCredentialRepository.save(userCredential);
