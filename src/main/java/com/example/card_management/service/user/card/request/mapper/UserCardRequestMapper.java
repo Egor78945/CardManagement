@@ -11,9 +11,12 @@ import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.repository.user.card.request.UserCardRequestRepository;
 import com.example.card_management.service.user.card.router.UserCardServiceRouter;
 import com.example.card_management.service.user.credential.UserCredentialService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+@Tag(name = "UserCardRequestMapper", description = "Сервис по изменению или преобразованию пользовательских запросов по картам")
 @Component
 public class UserCardRequestMapper {
     private final UserCardServiceRouter<UserCard> userCardServiceRouter;
@@ -26,6 +29,7 @@ public class UserCardRequestMapper {
         this.userCredentialService = userCredentialService;
     }
 
+    @Operation(description = "Создать объект пользовательского запроса по карте")
     public UserCardRequest mapTo(String senderEmail, UserCardRequestDTO userCardRequestDTO) {
         UserCard userCard = userCardServiceRouter.getByCardType(UserCardTypeEnumeration.VISA).getByNumber(userCardRequestDTO.getCardNumber());
         UserCardRequestTypeEnumeration cardRequestTypeEnumeration = UserCardRequestTypeEnumeration.getById(userCardRequestDTO.getRequestId());

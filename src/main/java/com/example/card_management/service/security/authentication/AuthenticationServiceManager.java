@@ -6,12 +6,14 @@ import com.example.card_management.model.user.dto.security.UserCredentialDTO;
 import com.example.card_management.service.security.token.TokenService;
 import com.example.card_management.service.user.credential.UserCredentialService;
 import com.example.card_management.service.user.credential.mapper.UserCredentialMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+@Tag(name = "AuthenticationServiceManager", description = "Базовый реализация сервиса аутентификации пользователей")
 @Service
 public class AuthenticationServiceManager extends AuthenticationService<UserCredentialDTO> {
     private final UserCredentialService<UserCredential> userCredentialService;

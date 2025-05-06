@@ -2,11 +2,13 @@ package com.example.card_management.model.user.card.request.dto;
 
 import com.example.card_management.model.user.card.request.entity.UserCardRequest;
 import com.example.card_management.service.validation.annotation.Digits;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
+@Tag(name = "UserCardRequestDTO", description = "DTO, представляющий основную основную информацию о пользовательском запросе, связанном с картами")
 public class UserCardRequestDTO extends UserCardRequest {
     @NotNull(message = "card number is null")
     @Size(min = 16, max = 16, message = "invalid card number")

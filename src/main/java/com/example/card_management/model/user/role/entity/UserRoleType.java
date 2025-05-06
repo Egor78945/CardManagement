@@ -1,9 +1,11 @@
 package com.example.card_management.model.user.role.entity;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Tag(name = "UserRoleType", description = "Entity, представляющий тип пользовательской роли")
 @Entity
 @Table(name = "user_role_type")
 public class UserRoleType {

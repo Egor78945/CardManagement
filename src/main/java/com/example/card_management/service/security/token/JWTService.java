@@ -4,12 +4,15 @@ import com.example.card_management.configuration.security.environment.JWTEnviron
 import com.example.card_management.model.user.credential.entity.UserCredential;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "JWTService", description = "Базовая реализация сервиса по работе с токенами под JWT")
 @Service
 public class JWTService implements TokenService<UserCredential> {
     private final JWTEnvironment jwtEnvironment;
@@ -32,7 +35,7 @@ public class JWTService implements TokenService<UserCredential> {
     }
 
     @Override
-    public String extractEmailFromToken(String token) {
+    public String extractUsernameFromToken(String token) {
         return extractClaimsFromToken(token).getSubject();
     }
 
@@ -51,6 +54,7 @@ public class JWTService implements TokenService<UserCredential> {
         }
     }
 
+    @Operation(description = "Извлечь полезную нагрузку из токена")
     private Claims extractClaimsFromToken(String token) {
         try {
             return Jwts

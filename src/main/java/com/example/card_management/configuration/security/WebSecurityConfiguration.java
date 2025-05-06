@@ -1,6 +1,7 @@
 package com.example.card_management.configuration.security;
 
 import com.example.card_management.enumeration.user.role.type.UserRoleTypeEnumeration;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Tag(name = "WebSecurityConfiguration", description = "Конфигурация настроек безопасности и распределения ролей по HTTP запросам")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration {

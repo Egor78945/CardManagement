@@ -1,10 +1,12 @@
 package com.example.card_management.enumeration.user.card.type;
 
 import com.example.card_management.exception.CardManagementException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "UserCardTypeEnumeration", description = "Перечисление типов пользовательских карт")
 public enum UserCardTypeEnumeration {
     VISA(1,"4"), MASTERCARD(2, "5");
     private final long id;

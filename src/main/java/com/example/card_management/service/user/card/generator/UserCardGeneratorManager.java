@@ -11,12 +11,16 @@ import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.service.user.card.router.UserCardServiceRouter;
 import com.example.card_management.service.user.credential.UserCredentialService;
 import com.example.card_management.util.encoder.Encoder;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Random;
 
+@Tag(name = "UserCardGeneratorManager", description = "Базовая реализация сервиса по генерации пользовательских кард")
 @Service
 public class UserCardGeneratorManager implements UserCardGenerator<UserCard> {
     private final UserCardServiceRouter<UserCard> userCardUserCardServiceRouter;
@@ -45,7 +49,8 @@ public class UserCardGeneratorManager implements UserCardGenerator<UserCard> {
         return new UserCard(userEmail, encoder.encode(cardNumber), new Date(new Date().getTime() + cardEnvironment.getCARD_LIFETIME()), new UserCardStatus(UserCardStatusTypeEnumeration.STATUS_ACTIVE.getId(), UserCardStatusTypeEnumeration.STATUS_ACTIVE.name()), new UserCardType(userCardTypeEnumeration.getId(), userCardTypeEnumeration.name()), 0.0);
     }
 
-    private String generateCardNumber(String prefix) {
+    @Operation(description = "Сгенерировать номер пользовательской карты")
+    private String generateCardNumber(@Parameter(description = "Префикс номера карты, который должен приписывать номер к определённой системе карт") String prefix) {
         StringBuilder cardNumber = new StringBuilder(prefix);
 
         while (cardNumber.length() < 15) {
@@ -58,6 +63,7 @@ public class UserCardGeneratorManager implements UserCardGenerator<UserCard> {
         return cardNumber.toString();
     }
 
+    @Operation(description = "Проверка номера карты по алгоритму Луна")
     private int calculateLuhnCheckDigit(String number) {
         int sum = 0;
         boolean alternate = false;

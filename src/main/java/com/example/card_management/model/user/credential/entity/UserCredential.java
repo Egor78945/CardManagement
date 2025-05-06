@@ -1,11 +1,13 @@
 package com.example.card_management.model.user.credential.entity;
 
 import com.example.card_management.model.user.role.entity.UserRole;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
 
+@Tag(name = "UserCredential", description = "Entity, представляющий основные пользовательские данные")
 @Entity
 @Table(name = "user_credential")
 public class UserCredential {

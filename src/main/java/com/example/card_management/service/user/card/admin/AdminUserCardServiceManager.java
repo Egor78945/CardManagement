@@ -5,16 +5,16 @@ import com.example.card_management.enumeration.user.card.type.UserCardTypeEnumer
 import com.example.card_management.model.user.card.entity.UserCard;
 import com.example.card_management.model.user.card.status.entity.UserCardStatus;
 import com.example.card_management.repository.user.card.UserCardRepository;
-import com.example.card_management.service.user.card.mapper.UserCardMapper;
 import com.example.card_management.service.user.card.router.UserCardServiceRouter;
 import com.example.card_management.util.encoder.Encoder;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Tag(name = "AdminUserCardServiceManager", description = "Базовая реализация сервиса по работе с пользовательскими картами для администрированных пользователей")
 @Service
 public class AdminUserCardServiceManager extends AdminUserCardService<UserCard> {
     private final UserCardServiceRouter<UserCard> userCardServiceRouter;
@@ -25,12 +25,12 @@ public class AdminUserCardServiceManager extends AdminUserCardService<UserCard> 
     }
 
     @Override
-    public final void changeUserCardStatusByNumber(String phoneNumber, UserCardStatus userCardStatus) {
-        userCardRepository.updateUserCardStatusByCardNumber(encoder.encode(phoneNumber), userCardStatus);
+    public final void changeUserCardStatusByNumber(String cardNumber, UserCardStatus userCardStatus) {
+        userCardRepository.updateUserCardStatusByCardNumber(encoder.encode(cardNumber), userCardStatus);
     }
 
     @Override
-    public final void deleteCardByPhoneNumber(String phoneNumber) {
+    public final void deleteCardByNumber(String phoneNumber) {
         userCardRepository.deleteUserCardByNumber(encoder.encode(phoneNumber));
     }
 

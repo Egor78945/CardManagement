@@ -3,11 +3,13 @@ package com.example.card_management.model.user.card.entity;
 import com.example.card_management.model.user.card.status.entity.UserCardStatus;
 import com.example.card_management.model.user.card.type.entity.UserCardType;
 import com.example.card_management.model.user.credential.entity.UserCredential;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Objects;
 
+@Tag(name = "UserCard", description = "Entity, представляющий пользователскую карту")
 @Entity
 @Table(name = "user_card")
 public class UserCard {

@@ -4,13 +4,9 @@ import com.example.card_management.configuration.card.environment.CardEnvironmen
 import com.example.card_management.enumeration.user.card.type.UserCardTypeEnumeration;
 import com.example.card_management.exception.CardManagementException;
 import com.example.card_management.model.user.card.entity.UserCard;
-import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.repository.user.card.UserCardRepository;
-import com.example.card_management.repository.user.card.request.UserCardRequestRepository;
-import com.example.card_management.service.user.card.mapper.UserCardMapper;
-import com.example.card_management.service.user.credential.UserCredentialService;
 import com.example.card_management.util.encoder.Encoder;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -18,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Tag(name = "MastercardCardServiceManager", description = "Реализация сервиса по работе с пользовательскими картами системы Mastercard")
 @Service
 public class MastercardCardServiceManager extends UserCardService<UserCard> {
     public MastercardCardServiceManager(UserCardRepository userCardRepository, CardEnvironment cardEnvironment, @Qualifier("stringEncoder") Encoder<String> encoder) {

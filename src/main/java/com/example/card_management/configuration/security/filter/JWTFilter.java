@@ -3,6 +3,7 @@ package com.example.card_management.configuration.security.filter;
 import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.service.security.token.TokenService;
 import com.example.card_management.service.user.credential.UserCredentialService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "JWTFilter", description = "Фильтр входящих HTTP запросов, осуществляющий проверку токена пользователя")
 @Component
 public class JWTFilter extends OncePerRequestFilter {
     private final TokenService<UserCredential> tokenService;
@@ -34,8 +36,8 @@ public class JWTFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             try {
-                if (tokenService.isTokenValid(token) && userCredentialService.existsByEmail(tokenService.extractEmailFromToken(token))) {
-                    String email = tokenService.extractEmailFromToken(token);
+                if (tokenService.isTokenValid(token) && userCredentialService.existsByEmail(tokenService.extractUsernameFromToken(token))) {
+                    String email = tokenService.extractUsernameFromToken(token);
                     List<String> authorities = tokenService.extractAuthoritiesFromToken(token);
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             email, null, authorities

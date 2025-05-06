@@ -1,12 +1,14 @@
 package com.example.card_management.model.user.card.transaction.dto;
 
 import com.example.card_management.service.user.card.validation.annotation.Card;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
+@Tag(name = "TransactionTransferDTO", description = "DTO, имеющий основную информацию о транзакции перевода денег с одной карты на другую")
 public class TransactionTransferDTO {
     @NotNull(message = "from card number is null")
     @Card

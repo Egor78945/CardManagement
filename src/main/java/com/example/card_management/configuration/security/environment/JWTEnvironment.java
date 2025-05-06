@@ -2,11 +2,13 @@ package com.example.card_management.configuration.security.environment;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 
+@Tag(name = "CardEnvironment", description = "Хранилище переменных окружения, обслуживающих систему JWT")
 @Component
 public class JWTEnvironment {
     private final long JWT_LIFETIME;

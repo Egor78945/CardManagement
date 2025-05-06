@@ -1,6 +1,8 @@
 package com.example.card_management.controller.advice;
 
 import com.example.card_management.controller.advice.handler.CommonControllerExceptionHandler;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "CommonControllerAdvice", description = "Обработчик ошибок, возникших в контроллере, помеченным CommonControllerExceptionHandler")
 @ControllerAdvice(annotations = CommonControllerExceptionHandler.class)
 public class CommonControllerAdvice {
     @ExceptionHandler(RuntimeException.class)

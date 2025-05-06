@@ -1,9 +1,11 @@
 package com.example.card_management.model.user.card.status.entity;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Tag(name = "UserCardStatus", description = "Entity, представляющий статус пользовательской карты")
 @Entity
 @Table(name = "user_card_status")
 public class UserCardStatus {

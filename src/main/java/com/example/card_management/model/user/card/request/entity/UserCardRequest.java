@@ -3,12 +3,14 @@ package com.example.card_management.model.user.card.request.entity;
 import com.example.card_management.model.user.card.request.type.entity.UserCardRequestType;
 import com.example.card_management.model.user.card.entity.UserCard;
 import com.example.card_management.model.user.credential.entity.UserCredential;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Objects;
 
+@Tag(name = "UserCardRequest", description = "Entity, представляющий пользовательский запрос, связанный с картами")
 @Entity
 @Table(name = "user_card_request")
 public class UserCardRequest {

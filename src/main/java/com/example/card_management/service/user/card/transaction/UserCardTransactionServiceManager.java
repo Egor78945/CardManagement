@@ -6,6 +6,8 @@ import com.example.card_management.exception.TransactionManagementException;
 import com.example.card_management.model.user.card.entity.UserCard;
 import com.example.card_management.model.user.card.transaction.dto.TransactionInsertDTO;
 import com.example.card_management.model.user.card.transaction.dto.TransactionTransferDTO;
+import com.example.card_management.model.user.dto.security.UserCredentialDTO;
+import com.example.card_management.service.security.authentication.AuthenticationService;
 import com.example.card_management.service.user.card.UserCardService;
 import com.example.card_management.service.user.card.router.UserCardServiceRouter;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,20 +16,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserCardTransactionServiceManager implements UserCardTransactionService<UserCard> {
+    private final AuthenticationService<UserCredentialDTO> authenticationService;
     private final UserCardServiceRouter<UserCard> cardServiceRouter;
     private final CardEnvironment cardEnvironment;
 
-    public UserCardTransactionServiceManager(@Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> cardServiceRouter, CardEnvironment cardEnvironment) {
+    public UserCardTransactionServiceManager(@Qualifier("authenticationServiceManager") AuthenticationService<UserCredentialDTO> authenticationService, @Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> cardServiceRouter, CardEnvironment cardEnvironment) {
+        this.authenticationService = authenticationService;
         this.cardServiceRouter = cardServiceRouter;
         this.cardEnvironment = cardEnvironment;
     }
 
     @Override
     @Transactional
-    public double insert(TransactionInsertDTO transaction, String inserterEmail) {
+    public double insert(TransactionInsertDTO transaction) {
         UserCardService<UserCard> cardService = cardServiceRouter.getByCardNumber(transaction.getCardNumberTo());
         UserCard targetCard = cardService.getByNumber(transaction.getCardNumberTo());
-        if (targetCard.getOwnerEmail().equals(inserterEmail) && targetCard.getStatus().getId() == UserCardStatusTypeEnumeration.STATUS_ACTIVE.getId() && canReceive(targetCard, transaction.getAmount())) {
+        if (targetCard.getOwnerEmail().equals(authenticationService.getCurrentUserEmail()) && targetCard.getStatus().getId() == UserCardStatusTypeEnumeration.STATUS_ACTIVE.getId() && canReceive(targetCard, transaction.getAmount())) {
             targetCard.setBalance(targetCard.getBalance() + transaction.getAmount());
             cardService.save(targetCard);
             return targetCard.getBalance();
@@ -38,11 +42,11 @@ public class UserCardTransactionServiceManager implements UserCardTransactionSer
 
     @Override
     @Transactional
-    public double transfer(TransactionTransferDTO transaction, String transmittingEmail) {
+    public double transfer(TransactionTransferDTO transaction) {
         UserCardService<UserCard> cardService = cardServiceRouter.getByCardNumber(transaction.getCardNumberFrom());
         UserCard fromCard = cardService.getByNumber(transaction.getCardNumberFrom());
         UserCard toCard = cardService.getByNumber(transaction.getCardNumberTo());
-        if (fromCard.getOwnerEmail().equals(transmittingEmail)
+        if (fromCard.getOwnerEmail().equals(authenticationService.getCurrentUserEmail())
                 && toCard.getId() != fromCard.getId()
                 && canSend(fromCard, transaction.getAmount())
                 && canReceive(toCard, transaction.getAmount())) {

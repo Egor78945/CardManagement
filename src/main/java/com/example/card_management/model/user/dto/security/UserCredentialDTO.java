@@ -1,11 +1,13 @@
 package com.example.card_management.model.user.dto.security;
 
 import com.example.card_management.service.security.validation.annotation.Password;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
+@Tag(name = "UserCredentialDTO", description = "DTO, хранящий главные пользовательские данные")
 public class UserCredentialDTO {
     @NotNull(message = "email is null")
     @Email(message = "invalid email format")

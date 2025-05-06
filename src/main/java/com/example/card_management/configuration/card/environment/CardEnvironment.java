@@ -1,8 +1,10 @@
 package com.example.card_management.configuration.card.environment;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Tag(name = "CardEnvironment", description = "Хранилище переменных окружения, обслуживающих систему карт")
 @Component
 public class CardEnvironment {
     private final long CARD_LIFETIME;

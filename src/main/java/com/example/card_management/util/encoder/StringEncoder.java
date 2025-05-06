@@ -2,6 +2,7 @@ package com.example.card_management.util.encoder;
 
 import com.example.card_management.configuration.encoder.environment.EncoderEnvironment;
 import com.example.card_management.exception.EncoderException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -11,6 +12,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+@Tag(name = "StringEncoder", description = "Севрис реализующий функционал для кодировки и декодировки строк")
 @Component
 public class StringEncoder implements Encoder<String> {
     private final Cipher encoder;

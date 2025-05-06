@@ -4,10 +4,12 @@ import com.example.card_management.exception.AuthenticationException;
 import com.example.card_management.exception.NotFoundException;
 import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.repository.user.credential.UserCredentialRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+@Tag(name = "UserCredentialServiceManager", description = "Базовый сервис, реализующий функционал по работе с основной пользовательской информацией")
 @Service
 public class UserCredentialServiceManager extends UserCredentialService<UserCredential> {
     private final UserCredentialRepository userCredentialRepository;

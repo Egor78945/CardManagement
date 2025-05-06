@@ -1,10 +1,12 @@
 package com.example.card_management.enumeration.user.card.request.type;
 
 import com.example.card_management.exception.CardManagementException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "UserCardRequestTypeEnumeration", description = "Перечисление типов пользовательских запросов, связанных с картами")
 public enum UserCardRequestTypeEnumeration {
     TYPE_BLOCK(1, "TYPE_BLOCK");
     private final long id;

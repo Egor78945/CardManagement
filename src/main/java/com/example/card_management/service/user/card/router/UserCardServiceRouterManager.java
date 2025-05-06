@@ -8,6 +8,8 @@ import com.example.card_management.service.user.card.MastercardCardServiceManage
 import com.example.card_management.service.user.card.UserCardService;
 import com.example.card_management.service.user.card.VisaCardServiceManager;
 import com.example.card_management.util.encoder.Encoder;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "UserCardServiceRouterManager", description = "Базовая реализация маршрутизатора сервисов по работе с пользовательскими картами")
 @Component
 public class UserCardServiceRouterManager implements UserCardServiceRouter<UserCard> {
+    @Parameter(description = "Карта, содержащая сервисы по работе с пользовательскими картами, доступные по типу пользовательской карты")
     private final Map<UserCardTypeEnumeration, UserCardService<UserCard>> cardServiceStrategy;
     private final UserCardRepository userCardRepository;
     private final Encoder<String> encoder;

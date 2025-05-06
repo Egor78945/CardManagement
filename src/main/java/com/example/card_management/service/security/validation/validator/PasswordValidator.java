@@ -1,9 +1,11 @@
 package com.example.card_management.service.security.validation.validator;
 
 import com.example.card_management.service.security.validation.annotation.Password;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+@Tag(name = "PasswordValidator", description = "Валидатор, проверяющий правильную структуру пароля пользователя")
 public class PasswordValidator implements ConstraintValidator<Password, String> {
     @Override
     public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
