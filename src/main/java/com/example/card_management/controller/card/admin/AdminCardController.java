@@ -61,30 +61,6 @@ public class AdminCardController {
         return ResponseEntity.ok(mask ? userCardUtility.maskCardNumber(userCardService.getAllUserCards(pageNumber)) : userCardUtility.showCardNumber(userCardService.getAllUserCards(pageNumber)));
     }
 
-    @Operation(description = "Получить постраничный список запросов пользователей, связанных с картами", responses = {
-            @ApiResponse(responseCode = "200", description = "Получен список запросов", content = {@Content(
-                    mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = UserCardRequest.class)))
-            }),
-            @ApiResponse(responseCode = "400", description = "Произошла ошибка во время получения списка запросов")}
-    )
-    @GetMapping("/request")
-    public ResponseEntity<List<UserCardRequest>> getUserCardRequest(@RequestParam(value = "page", defaultValue = "0") int pageNumber){
-        return ResponseEntity.ok(userCardRequestService.getAll(pageNumber));
-    }
-
-    @Operation(description = "Получить запрос пользователя, связанный с картой по email пользователя", responses = {
-            @ApiResponse(responseCode = "200", description = "Получен пользовательский запрос", content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = UserCardRequest.class)
-            )),
-            @ApiResponse(responseCode = "400", description = "Произошла ошибка во время получения запроса")}
-    )
-    @GetMapping("/request/{email}")
-    public ResponseEntity<UserCardRequest> getUserCardRequestBySenderEmail(@PathVariable("email") @Email String userEmail){
-        return ResponseEntity.ok(userCardRequestService.getBySenderEmail(userEmail));
-    }
-
     @Operation(description = "Заблокировать карту пользователя по номеру", responses = {
             @ApiResponse(responseCode = "200", description = "Карта пользователя заблокирована"),
             @ApiResponse(responseCode = "400", description = "Произошла ошибка во время блокировки карты")}
