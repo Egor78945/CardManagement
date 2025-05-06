@@ -37,13 +37,11 @@ import java.util.List;
 public class AdminCardController {
     private final UserCardServiceRouter<UserCard> userCardServiceRouter;
     private final AdminUserCardService<UserCard> adminUserCardService;
-    private final UserCardRequestService<UserCardRequest> userCardRequestService;
     private final UserCardUtility userCardUtility;
 
-    public AdminCardController(@Qualifier("adminUserCardServiceManager") AdminUserCardService<UserCard> adminUserCardService, @Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardServiceRouter, @Qualifier("userCardRequestServiceManager") UserCardRequestService<UserCardRequest> userCardRequestService, UserCardUtility userCardUtility) {
+    public AdminCardController(@Qualifier("adminUserCardServiceManager") AdminUserCardService<UserCard> adminUserCardService, @Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardServiceRouter, UserCardUtility userCardUtility) {
         this.userCardServiceRouter = userCardServiceRouter;
         this.adminUserCardService = adminUserCardService;
-        this.userCardRequestService = userCardRequestService;
         this.userCardUtility = userCardUtility;
     }
 
