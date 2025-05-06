@@ -22,7 +22,7 @@ public class UserCredentialMapper {
 
     public UserCredential mapTo(UserCredentialDTO user) {
         UserCredential userCredential = new UserCredential(user.getEmail(), passwordEncoder.encode(user.getPassword()));
-        userCredential.setRoleList(Arrays.asList(new UserRole(userCredential, new UserRoleType(UserRoleTypeEnumeration.ROLE_ADMIN.getId(), UserRoleTypeEnumeration.ROLE_ADMIN.name()))));
+        userCredential.setRoleList(Arrays.asList(new UserRole(userCredential, new UserRoleType(UserRoleTypeEnumeration.ROLE_USER.getId(), UserRoleTypeEnumeration.ROLE_USER.name()))));
         return userCredential;
     }
 }
