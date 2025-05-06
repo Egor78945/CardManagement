@@ -21,7 +21,7 @@ public abstract class AdminUserCardService<C extends UserCard> extends UserCardS
     @Operation(description = "Сменить статус пользовательской карт по номеру карты")
     public abstract void changeUserCardStatusByNumber(String cardNumber, UserCardStatus userCardStatus);
 
-    public abstract void deleteCardByNumber(String phoneNumber);
+    public abstract void deleteCardByNumber(String cardNumber);
 
     @Operation(description = "Сменить статус пользовательских карт, у которых истёк срок действия")
     public void updateExpiredUserCards() {

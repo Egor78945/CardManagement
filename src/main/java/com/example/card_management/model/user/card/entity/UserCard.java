@@ -119,7 +119,6 @@ public class UserCard {
                 ", expiredAt=" + expiredAt +
                 ", status=" + (status != null ? status : null) +
                 ", type=" + (type != null ? type : null) +
-                ", balance=" + balance +
                 '}';
     }
 }

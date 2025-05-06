@@ -1,4 +1,4 @@
-package com.example.card_management.model.user.dto.security;
+package com.example.card_management.model.user.credential.dto;
 
 import com.example.card_management.service.security.validation.annotation.Password;
 import io.swagger.v3.oas.annotations.tags.Tag;

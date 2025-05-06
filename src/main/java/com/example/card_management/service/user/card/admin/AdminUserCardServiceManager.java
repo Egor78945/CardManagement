@@ -30,8 +30,8 @@ public class AdminUserCardServiceManager extends AdminUserCardService<UserCard> 
     }
 
     @Override
-    public final void deleteCardByNumber(String phoneNumber) {
-        userCardRepository.deleteUserCardByNumber(encoder.encode(phoneNumber));
+    public final void deleteCardByNumber(String cardNumber) {
+        userCardRepository.deleteUserCardByNumber(encoder.encode(cardNumber));
     }
 
     @Override

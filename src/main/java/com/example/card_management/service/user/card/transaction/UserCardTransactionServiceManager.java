@@ -6,7 +6,7 @@ import com.example.card_management.exception.TransactionManagementException;
 import com.example.card_management.model.user.card.entity.UserCard;
 import com.example.card_management.model.user.card.transaction.dto.TransactionInsertDTO;
 import com.example.card_management.model.user.card.transaction.dto.TransactionTransferDTO;
-import com.example.card_management.model.user.dto.security.UserCredentialDTO;
+import com.example.card_management.model.user.credential.dto.UserCredentialDTO;
 import com.example.card_management.service.security.authentication.AuthenticationService;
 import com.example.card_management.service.user.card.UserCardService;
 import com.example.card_management.service.user.card.router.UserCardServiceRouter;

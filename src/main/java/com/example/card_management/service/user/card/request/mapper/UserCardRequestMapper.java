@@ -7,8 +7,10 @@ import com.example.card_management.model.user.card.entity.UserCard;
 import com.example.card_management.model.user.card.request.dto.UserCardRequestDTO;
 import com.example.card_management.model.user.card.request.entity.UserCardRequest;
 import com.example.card_management.model.user.card.request.type.entity.UserCardRequestType;
+import com.example.card_management.model.user.credential.dto.UserCredentialDTO;
 import com.example.card_management.model.user.credential.entity.UserCredential;
 import com.example.card_management.repository.user.card.request.UserCardRequestRepository;
+import com.example.card_management.service.security.authentication.AuthenticationService;
 import com.example.card_management.service.user.card.router.UserCardServiceRouter;
 import com.example.card_management.service.user.credential.UserCredentialService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,18 +24,20 @@ public class UserCardRequestMapper {
     private final UserCardServiceRouter<UserCard> userCardServiceRouter;
     private final UserCardRequestRepository userCardRequestRepository;
     private final UserCredentialService<UserCredential> userCredentialService;
+    private final AuthenticationService<UserCredentialDTO> authenticationService;
 
-    public UserCardRequestMapper(@Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardServiceRouter, @Qualifier("userCredentialServiceManager") UserCredentialService<UserCredential> userCredentialService, UserCardRequestRepository userCardRequestRepository) {
+    public UserCardRequestMapper(@Qualifier("userCardServiceRouterManager") UserCardServiceRouter<UserCard> userCardServiceRouter, @Qualifier("userCredentialServiceManager") UserCredentialService<UserCredential> userCredentialService, UserCardRequestRepository userCardRequestRepository, @Qualifier("authenticationServiceManager") AuthenticationService<UserCredentialDTO> authenticationService) {
         this.userCardRequestRepository = userCardRequestRepository;
         this.userCardServiceRouter = userCardServiceRouter;
         this.userCredentialService = userCredentialService;
+        this.authenticationService = authenticationService;
     }
 
     @Operation(description = "Создать объект пользовательского запроса по карте")
-    public UserCardRequest mapTo(String senderEmail, UserCardRequestDTO userCardRequestDTO) {
+    public UserCardRequest mapTo(UserCardRequestDTO userCardRequestDTO) {
         UserCard userCard = userCardServiceRouter.getByCardType(UserCardTypeEnumeration.VISA).getByNumber(userCardRequestDTO.getCardNumber());
         UserCardRequestTypeEnumeration cardRequestTypeEnumeration = UserCardRequestTypeEnumeration.getById(userCardRequestDTO.getRequestId());
-        if (!senderEmail.equals(userCard.getOwnerEmail())) {
+        if (!authenticationService.getCurrentUserEmail().equals(userCard.getOwnerEmail())) {
             throw new CardManagementException("card belongs to another user");
         }
         if (userCardRequestRepository.existsUserCardRequestByCard_Number(userCard.getNumber())) {

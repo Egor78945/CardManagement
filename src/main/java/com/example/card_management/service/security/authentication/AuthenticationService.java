@@ -1,7 +1,7 @@
 package com.example.card_management.service.security.authentication;
 
 import com.example.card_management.model.user.credential.entity.UserCredential;
-import com.example.card_management.model.user.dto.security.UserCredentialDTO;
+import com.example.card_management.model.user.credential.dto.UserCredentialDTO;
 import com.example.card_management.service.security.token.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

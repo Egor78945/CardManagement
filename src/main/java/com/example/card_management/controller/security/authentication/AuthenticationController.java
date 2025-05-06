@@ -2,7 +2,7 @@ package com.example.card_management.controller.security.authentication;
 
 import com.example.card_management.controller.advice.handler.CommonControllerExceptionHandler;
 import com.example.card_management.controller.security.authentication.advice.handler.AuthenticationControllerExceptionHandler;
-import com.example.card_management.model.user.dto.security.UserCredentialDTO;
+import com.example.card_management.model.user.credential.dto.UserCredentialDTO;
 import com.example.card_management.service.security.authentication.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
